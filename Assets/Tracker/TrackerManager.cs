@@ -25,6 +25,8 @@ public class TrackerManager : MonoBehaviour
     public PathViewerControl PathControl;
     public Canvas PathControlMenu;
 
+    public Canvas MenuCamera;
+
     [HideInInspector]
     public string storedFilePath = string.Empty;
 
@@ -126,7 +128,13 @@ public class TrackerManager : MonoBehaviour
         {
             showRemainingMission();
         }
-       
+
+        //Return to Main Menu
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            MenuCamera.enabled = !MenuCamera.enabled;
+        }
+
         updateARanks();
 
         updateKeys();

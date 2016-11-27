@@ -57388,7 +57388,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1765280660}
   - 114: {fileID: 1765280661}
-  - 114: {fileID: 1765280659}
   - 114: {fileID: 1765280662}
   m_Layer: 0
   m_Name: Manager
@@ -57397,19 +57396,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1765280659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1765280658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd45ec942d42a2d44b392208d90c4c21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MenuMode: 1
-  MenuCamera: {fileID: 206260409}
 --- !u!4 &1765280660
 Transform:
   m_ObjectHideFlags: 0
@@ -57447,6 +57433,7 @@ MonoBehaviour:
   AutoSaveToggle: {fileID: 1935088512}
   PathControl: {fileID: 1765280662}
   PathControlMenu: {fileID: 1976940348}
+  MenuCamera: {fileID: 206260409}
   storedFilePath: 
   WestopolisControl: {fileID: 286239725}
   DigitalCircuitControl: {fileID: 2084195550}
