@@ -27,6 +27,8 @@ public class TrackerManager : MonoBehaviour
 
     public Canvas MenuCamera;
 
+    public Canvas RoutingPathsCanvas;
+
     [HideInInspector]
     public string storedFilePath = string.Empty;
 
@@ -79,7 +81,7 @@ public class TrackerManager : MonoBehaviour
         ThreeMissionLevels = new List<ThreeMissionControl> { (ThreeMissionControl)WestopolisControl,
                                                              (ThreeMissionControl)GlyphicCanyonControl,
                                                              (ThreeMissionControl)CrypticCastleControl,
-                                                             (ThreeMissionControl) PrisonIslandControl,
+                                                             (ThreeMissionControl)PrisonIslandControl,
                                                              (ThreeMissionControl)CircusParkControl,
                                                              (ThreeMissionControl)TheDoomControl,
                                                              (ThreeMissionControl)SkyTroopsControl,
@@ -89,16 +91,16 @@ public class TrackerManager : MonoBehaviour
                                                              (ThreeMissionControl)SpaceGadgetControl };
 
         TwoMissionLevels = new List<TwoMissionControl> { (TwoMissionControl)DigitalCircuitControl,
-                                                        (TwoMissionControl)LethalHighwayControl,
-                                                        (TwoMissionControl)CentralCityControl,
-                                                        (TwoMissionControl)DeathRuinsControl,
-                                                        (TwoMissionControl)TheARKControl,
-                                                        (TwoMissionControl)LostImpactControl,
-                                                        (TwoMissionControl)GUNFortressControl,
-                                                        (TwoMissionControl)BlackCometControl,
-                                                        (TwoMissionControl)LavaShelterControl,
-                                                        (TwoMissionControl)CosmicFallControl,
-                                                        (TwoMissionControl)FinalHauntControl };
+                                                         (TwoMissionControl)LethalHighwayControl,
+                                                         (TwoMissionControl)CentralCityControl,
+                                                         (TwoMissionControl)DeathRuinsControl,
+                                                         (TwoMissionControl)TheARKControl,
+                                                         (TwoMissionControl)LostImpactControl,
+                                                         (TwoMissionControl)GUNFortressControl,
+                                                         (TwoMissionControl)BlackCometControl,
+                                                         (TwoMissionControl)LavaShelterControl,
+                                                         (TwoMissionControl)CosmicFallControl,
+                                                         (TwoMissionControl)FinalHauntControl };
 
         //StartCoroutine("LoadFileFirstTime");
     }
@@ -127,6 +129,11 @@ public class TrackerManager : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Z))
         {
             showRemainingMission();
+        }
+
+        if (Input.GetKeyUp(KeyCode.X))
+        {
+            toggleRoutingView();
         }
 
         //Return to Main Menu
@@ -418,6 +425,11 @@ public class TrackerManager : MonoBehaviour
 
         TheLastWayControl.KeyEditMode.SetActive(KeyEditMode);
         TheLastWayControl.SetPathActives(!KeyEditMode);
+    }
+
+    void toggleRoutingView()
+    {
+        RoutingPathsCanvas.enabled = !RoutingPathsCanvas.enabled;
     }
 
     void togglePathMenu()
