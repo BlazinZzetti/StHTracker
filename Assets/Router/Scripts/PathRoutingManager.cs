@@ -16,6 +16,9 @@ public class PathRoutingManager : MonoBehaviour
     public Toggle NoCCGToggle;
 
     public GameObject RoutingPathObjectContainer;
+
+    public GameObject OutputPanel;
+    public Button OutputPanelCloseButton;
     public Text OutputText;
 
     public List<RoutingPathObject> RoutingPaths = new List<RoutingPathObject>();
@@ -80,6 +83,8 @@ public class PathRoutingManager : MonoBehaviour
         AddPathButton.onClick.AddListener(addRoutingPath);
         ClearPathsButton.onClick.AddListener(clearRoutingPaths);
         CalculateButton.onClick.AddListener(calculatePaths);
+
+        OutputPanelCloseButton.onClick.AddListener(closeOutputPanel);
     }
 
     void Start()
@@ -438,6 +443,11 @@ public class PathRoutingManager : MonoBehaviour
         addRoutingPath();
     }
 
+    private void closeOutputPanel()
+    {
+        OutputPanel.SetActive(false);
+    }
+
     private void calculatePaths()
     {
         foreach (var cs in CutsceneData)
@@ -490,6 +500,8 @@ public class PathRoutingManager : MonoBehaviour
         outputString += "Time to Complete All Paths: " + timeToComplete;
 
         OutputText.text = outputString;
+
+        OutputPanel.SetActive(true);
     }
 
     private void refreshInterface()
