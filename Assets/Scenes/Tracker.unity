@@ -16645,7 +16645,7 @@ RectTransform:
   m_Children:
   - {fileID: 583982733}
   m_Father: {fileID: 1409727324}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -21775,7 +21775,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.00023830784}
-  m_SizeDelta: {x: 0, y: 8150}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &583982734
 MonoBehaviour:
@@ -24055,8 +24055,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AddPathButton: {fileID: 1332626713}
   ClearPathsButton: {fileID: 581536363}
-  ImportPathsButton: {fileID: 972179786}
-  SavePathsButton: {fileID: 1993400583}
+  OpenRouteButton: {fileID: 972179786}
+  SaveRouteButton: {fileID: 1993400583}
   CalculateButton: {fileID: 1966871879}
   NewGameToggle: {fileID: 2012902610}
   NoCCGToggle: {fileID: 234664201}
@@ -24065,6 +24065,10 @@ MonoBehaviour:
   OutputPanelCloseButton: {fileID: 2102210812}
   OutputText: {fileID: 1809591247}
   RoutingPaths: []
+  SavedRouteSelectionPanel: {fileID: 296587633}
+  SavedRouteSelectionPanelCloseButton: {fileID: 282110494}
+  SavedRouteSelectionPanelScrollView: {fileID: 1409727327}
+  RoutingSaveFiles: []
   PathCodeByNumber: []
 --- !u!1 &637054218
 GameObject:
@@ -27817,7 +27821,7 @@ Transform:
   - {fileID: 1628054603}
   - {fileID: 563614127}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &791759484
 GameObject:
@@ -36487,7 +36491,7 @@ RectTransform:
   m_Children:
   - {fileID: 127658548}
   m_Father: {fileID: 1409727324}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -36536,8 +36540,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 473821931}
   m_HandleRect: {fileID: 473821930}
   m_Direction: 2
-  m_Value: 1.0000001
-  m_Size: 0.029141106
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -51167,7 +51171,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.99999, y: 0.99999, z: 0.99999}
   m_Children:
-  - {fileID: 2002656953}
   - {fileID: 425846168}
   - {fileID: 1013874327}
   m_Father: {fileID: 834841225}
@@ -57665,7 +57668,7 @@ RectTransform:
   m_Children:
   - {fileID: 634326936}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -69272,7 +69275,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1930829658
 GameObject:
@@ -72163,41 +72166,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2000954848}
   m_CullTransparentMesh: 0
---- !u!1 &2002656952
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2002656953}
-  m_Layer: 5
-  m_Name: RouteFileObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2002656953
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2002656952}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1409727324}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 181.9, y: -136.02}
-  m_SizeDelta: {x: 353, y: 34.37}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2006685904
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Windows.Forms;
-using System.Xml;
 using UnityEngine;
 using UnityEngine.UI;
 using Button = UnityEngine.UI.Button;
+using UnityApplication = UnityEngine.Application;
 
 public class PathRoutingManager : MonoBehaviour
 {
+    private string routeSaveFilesLocation;
+
     public Button AddPathButton;
     public Button ClearPathsButton;
-    public Button ImportPathsButton;
-    public Button SavePathsButton;
+    public Button OpenRouteButton;
+    public Button SaveRouteButton;
     public Button CalculateButton;
 
     public Toggle NewGameToggle;
@@ -28,6 +27,12 @@ public class PathRoutingManager : MonoBehaviour
     public List<RoutingPathObject> RoutingPaths = new List<RoutingPathObject>();
 
     private List<CutsceneData> CutsceneData = new List<CutsceneData>();
+
+    public GameObject SavedRouteSelectionPanel;
+    public Button SavedRouteSelectionPanelCloseButton;
+    public ScrollRect SavedRouteSelectionPanelScrollView;
+
+    public List<RouteSaveFileObject> RoutingSaveFiles = new List<RouteSaveFileObject>();
 
     #region RoutingLevels
     RoutingLevel SonicDiablonPD;
@@ -76,9 +81,13 @@ public class PathRoutingManager : MonoBehaviour
 
     void Awake()
     {
+        routeSaveFilesLocation = UnityApplication.dataPath;
+
         initializeCutsceneData();
         initializeRoutingLevels();
         initializePathCodesByNumber();
+
+        refreshSavedRouteFiles();
 
         NewGameToggle.isOn = false;
         NoCCGToggle.isOn = false;
@@ -88,18 +97,24 @@ public class PathRoutingManager : MonoBehaviour
         ClearPathsButton.onClick.AddListener(clearRoutingPaths);
         CalculateButton.onClick.AddListener(calculatePaths);
 
+        OpenRouteButton.onClick.AddListener(openSavedRoutesSelection);
+        SavedRouteSelectionPanelCloseButton.onClick.AddListener(refreshSavedRouteFiles);
+
         OutputPanelCloseButton.onClick.AddListener(closeOutputPanel);
     }
 
     void Start()
     {
+        //Check to see if there are any routes in the routes folder.
+        OpenRouteButton.interactable = true;
+
         addRoutingPath();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        adjustSavedRouteSelectionViewSize();
     }
 
     private void initializeCutsceneData()
@@ -419,6 +434,33 @@ public class PathRoutingManager : MonoBehaviour
         PathCodeByNumber.Add(PathCode);
     }
 
+    private void refreshSavedRouteFiles()
+    {
+        //Lets pretend I found 5 files.
+
+        var jfg = routeSaveFilesLocation;
+
+        foreach (var saveFile in RoutingSaveFiles)
+        {
+            Destroy(saveFile.gameObject);
+        }
+        RoutingSaveFiles.Clear();
+
+        int numberOfFiles = 5;
+
+        for (int i = 0; i < numberOfFiles; i++)
+        {
+            var routingSaveFile = Instantiate(Resources.Load("RouteSaveFileObject")) as GameObject;
+            RouteSaveFileObject RoutingSaveFile = routingSaveFile.GetComponent<RouteSaveFileObject>();
+            RoutingSaveFile.Setup("Save #" + i, false);
+            routingSaveFile.transform.SetParent(SavedRouteSelectionPanelScrollView.content, false);
+
+            RoutingSaveFile.DeleteButton.onClick.AddListener(() => OnRouteSaveFileDeleteButtonPressed(RoutingSaveFile));
+
+            RoutingSaveFiles.Add(RoutingSaveFile);
+        }
+    }
+
     private void addRoutingPath()
     {
         var routingPathObject = Instantiate(Resources.Load("RoutingPathObject")) as GameObject;
@@ -445,6 +487,22 @@ public class PathRoutingManager : MonoBehaviour
         RoutingPaths.Clear();
 
         addRoutingPath();
+    }
+
+    private void adjustSavedRouteSelectionViewSize()
+    {
+        SavedRouteSelectionPanelScrollView.content.sizeDelta 
+            = new Vector2(SavedRouteSelectionPanelScrollView.content.sizeDelta.x, SavedRouteSelectionPanelScrollView.content.childCount * 30);
+    }
+
+    private void openSavedRoutesSelection()
+    {
+        SavedRouteSelectionPanel.SetActive(true);
+    }
+
+    private void closeSavedRoutesSelection()
+    {
+        SavedRouteSelectionPanel.SetActive(false);
     }
 
     private void closeOutputPanel()
@@ -569,6 +627,13 @@ public class PathRoutingManager : MonoBehaviour
         RoutingPaths.Remove(rpo);
         Destroy(rpo.gameObject);
         refreshInterface();
+    }
+
+    private void OnRouteSaveFileDeleteButtonPressed(RouteSaveFileObject rpo)
+    {
+        RoutingSaveFiles.Remove(rpo);
+        Destroy(rpo.gameObject);
+        //refreshSavedRouteFiles();
     }
 
     private void OnRoutingPathInputFieldEditEnd(RoutingPathObject rpo)
