@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Windows.Forms;
+using System.Xml;
 using UnityEngine;
 using UnityEngine.UI;
+using Button = UnityEngine.UI.Button;
 
 public class PathRoutingManager : MonoBehaviour
 {
@@ -608,5 +612,90 @@ public class PathRoutingManager : MonoBehaviour
         }
 
         refreshInterface();
-    }    
+    }
+
+    //XmlDocument xml;
+    ////save code
+    //public void LoadConfigFile()
+    //{
+    //    //Check if config file exists before trying to use it.
+    //    if (!File.Exists("config.xml"))
+    //    {
+    //        //Save will create a file with default parameters from initialization.
+    //        Save();
+    //    }
+
+    //    //Double Check in case the file creation failed 
+    //    //if we attempted to create one.
+    //    if (File.Exists("config.xml"))
+    //    {
+    //        xml.Load("config.xml");
+    //        //Get Database Location stored in configXml.
+    //        foreach (XmlElement node in xml.DocumentElement)
+    //        {
+    //            if (node.Name == "DatabaseLocation")
+    //            {
+    //                databaseLocation = node.InnerText;
+    //            }
+    //            if (node.Name == "ProfilesData")
+    //            {
+    //                profileIndex = Int32.Parse(node.GetAttribute("index"));
+    //                profileCount = Int32.Parse(node.InnerText);
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        MessageBox.Show("Config Xml File Load Failed.");
+    //    }
+    //}
+
+    //public void Save()
+    //{
+    //    xml = new XmlDocument();
+
+    //    var baseNode = xml.CreateElement("Config");
+
+    //    var databaseLocationNode = xml.CreateElement("DatabaseLocation");
+    //    databaseLocationNode.InnerText = databaseLocation;
+
+    //    var profilesDataNote = xml.CreateElement("ProfilesData");
+    //    profilesDataNote.InnerText = profileCount.ToString(); // How many are there?
+    //    profilesDataNote.SetAttribute("index", profileIndex.ToString());
+
+    //    baseNode.AppendChild(databaseLocationNode);
+    //    baseNode.AppendChild(profilesDataNote);
+
+    //    xml.AppendChild(baseNode);
+
+    //    xml.Save("config.xml");
+    //}
+
+    //public void CreateNewProfile()
+    //{
+    //    using (SaveFileDialog sfd = new SaveFileDialog())
+    //    {
+    //        sfd.InitialDirectory = Common.Instance.DatabaseLocation;
+    //        sfd.AddExtension = true;
+    //        sfd.DefaultExt = "xshadowroute";
+    //        sfd.Filter = "xshadowroute (*.xshadowroute)|*.xshadowroute";
+
+    //        var result = sfd.ShowDialog();
+
+    //        if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(sfd.FileName))
+    //        {
+    //            if (!File.Exists(sfd.FileName))
+    //            {
+    //                var name = Path.GetFileNameWithoutExtension(sfd.FileName);
+    //                var newProfile = new Profile(name, sfd.FileName);
+    //                newProfile.Save();
+
+    //                //Profiles available changed, reset the saved index.
+    //                ProfileIndex = 0;
+
+    //                Save();
+    //            }
+    //        }
+    //    }
+    //}
 }
