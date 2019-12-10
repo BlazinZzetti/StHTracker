@@ -187,6 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44ad8655d742b5d458251b8d82d993d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fileLocation: 
   OpenButton: {fileID: 3330645622981588174}
   FavoriteButton: {fileID: 4733452007965808713}
   DeleteButton: {fileID: 8440083682361887689}
@@ -303,7 +304,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 3175483958354088298}
   m_OnClick:
     m_PersistentCalls:

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Runtime.InteropServices;
 using UnityEngine.SceneManagement;
 using System.IO;
+using System.Xml;
 
 public class TrackerMenu : MonoBehaviour
 {
@@ -12,8 +13,8 @@ public class TrackerMenu : MonoBehaviour
 
     public TrackerManager Manager;
 
-    //[DllImport("user32.dll")]
-    //private static extern void OpenFileDialog();
+    [DllImport("user32.dll")]
+    private static extern void OpenFileDialog();
 
     //[DllImport("user32.dll")]
     //private static extern void SaveFileDialog();
@@ -21,56 +22,25 @@ public class TrackerMenu : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        //LoadFileLocationButton.onClick.AddListener(onLoadFileLocationButtonPressed);
+        LoadFileLocationButton.onClick.AddListener(onLoadFileLocationButtonPressed);
         //SaveFileButton.onClick.AddListener(onSaveFileButtonPressed);
         ReturnToMenuButton.onClick.AddListener(onReturnToMenuButtonPressed);
 	}
 
-    //void onLoadFileLocationButtonPressed()
-    //{
-    //    System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
+    void onLoadFileLocationButtonPressed()
+    {
+        System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
 
-    //    var result = ofd.ShowDialog();
+        ofd.DefaultExt = "xshadowprofile";
+        ofd.Filter = "xshadowprofile (*.xshadowprofile)|*.xshadowprofile";
 
-    //    if (result == System.Windows.Forms.DialogResult.OK && File.Exists(ofd.FileName))
-    //    {
-    //        // Open the file to read from.
-    //        using (StreamReader sr = File.OpenText(ofd.FileName))
-    //        {
-    //            string s = "";
-    //            foreach (var path in Manager.PathControl.Paths)
-    //            {
-    //                if ((s = sr.ReadLine()) != null)
-    //                {
-    //                    path.CompletedToggle.isOn = bool.Parse(s);
-    //                }
-    //            }
-    //        }
-    //        Manager.storedFilePath = ofd.FileName;
-    //    }
-    //}
+        var result = ofd.ShowDialog();
 
-    //void onSaveFileButtonPressed()
-    //{
-    //    System.Windows.Forms.SaveFileDialog sfd = new System.Windows.Forms.SaveFileDialog();
-
-    //    sfd.DefaultExt = ".txt";
-
-    //    var result = sfd.ShowDialog();
-
-    //    if (result == System.Windows.Forms.DialogResult.OK)
-    //    {
-    //        // Create a file to write to.
-    //        using (StreamWriter sw = File.CreateText(sfd.FileName))
-    //        {
-    //            foreach (var path in Manager.PathControl.Paths)
-    //            {
-    //                sw.WriteLine(path.CompletedToggle.isOn);
-    //            }
-    //        }
-    //        Manager.storedFilePath = sfd.FileName;
-    //    }
-    //}
+        if (result == System.Windows.Forms.DialogResult.OK && File.Exists(ofd.FileName))
+        {
+            Common.ShadowProfileData = new XShadowProfileData(ofd.FileName);
+        }
+    }
 
     void onReturnToMenuButtonPressed()
     {

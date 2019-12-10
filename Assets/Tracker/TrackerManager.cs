@@ -78,6 +78,8 @@ public class TrackerManager : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+        Common.InitalizeLevelData();
+        Common.InitializeSaveFolder();
         ThreeMissionLevels = new List<ThreeMissionControl> { (ThreeMissionControl)WestopolisControl,
                                                              (ThreeMissionControl)GlyphicCanyonControl,
                                                              (ThreeMissionControl)CrypticCastleControl,

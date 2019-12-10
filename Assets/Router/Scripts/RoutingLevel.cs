@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RoutingLevel 
 {
+    public string Name;
     public RoutingLevel DarkEndingDestination;
     public RoutingLevel NormalEndingDestination;
     public RoutingLevel HeroEndingDestination;
@@ -12,8 +13,9 @@ public class RoutingLevel
     public List<int> NormalCutscenes;
     public List<int> HeroCutscenes;
 
-    public RoutingLevel(RoutingLevel dark, RoutingLevel normal, RoutingLevel hero)
+    public RoutingLevel(string name, RoutingLevel dark, RoutingLevel normal, RoutingLevel hero)
     {
+        Name = name;
         DarkEndingDestination = dark;
         NormalEndingDestination = normal;
         HeroEndingDestination = hero;

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,12 +15,25 @@ public class RoutingPathObject : MonoBehaviour
     public Button SettingsButton;
     public Button DeleteButton;
 
-    public string ValidPathCode = "";
-    public int ValidPathNumber = 0;
+    public RoutingPathData PathData;
+
+    public int index;
 
     public bool isValid
     {
-        get { return ValidPathCode != string.Empty && ValidPathNumber > 0; }
+        get { return PathData.ValidPathCode != string.Empty && PathData.ValidPathNumber > 0; }
+    }
+
+    public string DisplayText
+    {
+        get
+        {
+            if (isValid)
+            {
+                return (PathData.displayType == RoutingPathData.DisplayType.Number) ? PathData.ValidPathNumber.ToString() : PathData.ValidPathCode;
+            }
+            return "";
+        }
     }
 
     // Start is called before the first frame update
@@ -32,5 +46,10 @@ public class RoutingPathObject : MonoBehaviour
     void Update()
     {
         
+    }
+
+    internal void Setup(RoutingPathData rpd)
+    {
+        PathData = rpd;
     }
 }
