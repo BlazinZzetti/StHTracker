@@ -66,7 +66,7 @@ public static class Common
 
         Levels.Add(new ProfileLevel()
         {
-            Name = "Digital Curcuit",
+            Name = "Digital Circuit",
             Missions = new List<ProfileLevel.MissionType>() { ProfileLevel.MissionType.Dark, ProfileLevel.MissionType.Hero }
         });
 

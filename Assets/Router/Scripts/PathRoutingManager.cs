@@ -23,7 +23,7 @@ public class PathRoutingManager : MonoBehaviour
     public GameObject OutputPanel;
     public Button OutputPanelCloseButton;
     public Text OutputText;
-    private bool unableToCompleteRoute;
+    private string unableToCompleteRoute = null;
 
     Dictionary<char, ProfileLevel.MissionType> MisionTypeLookup = new Dictionary<char, ProfileLevel.MissionType>
         {
@@ -680,7 +680,7 @@ public class PathRoutingManager : MonoBehaviour
 
     private void calculatePaths()
     {
-        unableToCompleteRoute = false;
+        unableToCompleteRoute = null;
         foreach (var cs in CutsceneData)
         {
             cs.Skippable = NewGameToggle.isOn;
@@ -695,7 +695,7 @@ public class PathRoutingManager : MonoBehaviour
             uint timeToCompletePath = 0;
 
             RoutingLevel pointer = Westopolis;
-            for (int i = 0; i < 6 && !unableToCompleteRoute; i++)
+            for (int i = 0; i < 6 && unableToCompleteRoute == null; i++)
             {
                 switch (code[i])
                 {
@@ -736,10 +736,15 @@ public class PathRoutingManager : MonoBehaviour
             }
             timeToComplete += timeToCompletePath;
             outputString += "Time to Complete Path #" + rp.PathData.ValidPathNumber + " - " + rp.PathData.ValidPathCode + ": " + timeToCompletePath + Environment.NewLine;
+
+            if (unableToCompleteRoute != null)
+            {
+                break;
+            }
         }
         outputString += "Time to Complete All Paths: " + timeToComplete;
 
-        OutputText.text = (unableToCompleteRoute) ? "Unable to complete route due to missing data." : outputString;
+        OutputText.text = (unableToCompleteRoute != null) ? "Unable to complete route due to missing data." + Environment.NewLine + unableToCompleteRoute : outputString;
 
         OutputPanel.SetActive(true);
     }
@@ -768,7 +773,7 @@ public class PathRoutingManager : MonoBehaviour
         }
         else
         {
-            unableToCompleteRoute = true;
+            unableToCompleteRoute = pointer.Name + " " + MisionTypeLookup[missionCode];
         }
 
         return timeToCompletePath;
