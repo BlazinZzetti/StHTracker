@@ -206,7 +206,7 @@ public class TrackerManager : MonoBehaviour
         var totalPaths = 326 * 4;
 
         ARankTrackerText.text =     "A Ranks: " + totalMissionsCompleted + " / 71 " + ((totalMissionsCompleted / 71.0f) * 100).ToString("f2") + "%";
-        KeyTrackerText.text =       "Keys: " + numOfKeys + " / 115 " + ((numOfKeys / 115) * 100).ToString("f2") + "%";
+        KeyTrackerText.text =       "Keys: " + numOfKeys + " / 115 " + ((numOfKeys / 115.0f) * 100).ToString("f2") + "%";
         PathTrackerText.text =      "Paths: " + numOfPaths + " / 326 " + ((numOfPaths / 326.0f) * 100).ToString("f2") + "%";
         TotalTrackerText.text =     "Total: " + (totalMissionsCompleted + numOfKeys + numOfPaths) + " / 512 " + (((totalMissionsCompleted + numOfKeys + numOfPaths) / 512.0f) * 100).ToString("f2") + "%";
         EstimatedTrackerText.text = (((totalMissionsCompleted + (numOfKeys) + (numOfPaths * 4)) / (float)(71 + 115 + totalPaths)) * 100).ToString("f2") + "%";
