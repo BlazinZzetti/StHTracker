@@ -14,6 +14,7 @@ public class PathRoutingManager : MonoBehaviour
     public Button OpenRouteButton;
     public Button SaveRouteButton;
     public Button CalculateButton;
+    public Button ExtraStagesButton;
 
     public Toggle NewGameToggle;
     public Toggle NoCCGToggle;
@@ -39,6 +40,10 @@ public class PathRoutingManager : MonoBehaviour
     public GameObject SavedRouteSelectionPanel;
     public Button SavedRouteSelectionPanelCloseButton;
     public ScrollRect SavedRouteSelectionPanelScrollView;
+
+    public GameObject ExtraStagesPanel;
+    public Button ExtraStagesPanelCloseButton;
+    public ScrollRect ExtraStagesPanelScrollView;
 
     public GameObject SaveMessageOverwritePanel;
     public Text SaveMessageOverwriteFileNameText;
@@ -126,6 +131,9 @@ public class PathRoutingManager : MonoBehaviour
         OpenRouteButton.onClick.AddListener(openSavedRoutesSelection);
         SavedRouteSelectionPanelCloseButton.onClick.AddListener(closeSavedRoutesSelection);
 
+        ExtraStagesButton.onClick.AddListener(openExtraStages);
+        ExtraStagesPanelCloseButton.onClick.AddListener(closeExtraStages);
+
         SaveRouteButton.onClick.AddListener(saveCurrentRoute);
 
         OutputPanelCloseButton.onClick.AddListener(closeOutputPanel);
@@ -143,6 +151,7 @@ public class PathRoutingManager : MonoBehaviour
     void Update()
     {
         adjustSavedRouteSelectionViewSize();
+        adjustExtraStagesSelectionViewSize();
     }
 
     private void initializeCutsceneData()
@@ -546,6 +555,12 @@ public class PathRoutingManager : MonoBehaviour
             = new Vector2(SavedRouteSelectionPanelScrollView.content.sizeDelta.x, SavedRouteSelectionPanelScrollView.content.childCount * 30);
     }
 
+    private void adjustExtraStagesSelectionViewSize()
+    {
+        ExtraStagesPanelScrollView.content.sizeDelta
+            = new Vector2(ExtraStagesPanelScrollView.content.sizeDelta.x, ExtraStagesPanelScrollView.content.childCount * 30);
+    }
+
     private void openSavedRoutesSelection()
     {
         refreshSavedRouteFiles();
@@ -555,6 +570,16 @@ public class PathRoutingManager : MonoBehaviour
     private void closeSavedRoutesSelection()
     {
         SavedRouteSelectionPanel.SetActive(false);
+    }
+
+    private void openExtraStages()
+    {
+        ExtraStagesPanel.SetActive(true);
+    }
+
+    private void closeExtraStages()
+    {
+        ExtraStagesPanel.SetActive(false);
     }
 
     private void saveCurrentRoute()
