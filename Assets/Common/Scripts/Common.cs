@@ -21,6 +21,33 @@ public static class Common
         }
     }
 
+    public static string[] LevelNames = new string[]
+    {
+        "Westopolis",
+        "Digital Circuit",
+        "Glyphic Canyon",
+        "Lethal Highway",
+        "Cryptic Castle",
+        "Prison Island",
+        "Circus Park",
+        "Central City",
+        "The Doom",
+        "Sky Troops",
+        "Mad Matrix",
+        "Death Ruins",
+        "The ARK",
+        "Air Fleet",
+        "Iron Jungle",
+        "Space Gadget",
+        "Lost Impact",
+        "GUN Fortress",
+        "Black Comet",
+        "Lava Shelter",
+        "Cosmic Fall",
+        "Final Haunt",
+        "The Last Way"
+    };
+
     public static string SaveFolderPath
     {
         get { return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\StHTracker"; }

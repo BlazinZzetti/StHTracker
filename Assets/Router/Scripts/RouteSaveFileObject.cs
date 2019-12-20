@@ -15,22 +15,11 @@ public class RouteSaveFileObject : MonoBehaviour
     public bool isNoCCG;
     private bool isFavorite;
     public List<RoutingPathData> RoutingPaths = new List<RoutingPathData>();
+    public List<ExtraStageData> ExtraStages = new List<ExtraStageData>();
 
     public Button OpenButton;
     public Button FavoriteButton;
     public Button DeleteButton;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public bool Setup(string filepath)
     {
@@ -38,6 +27,7 @@ public class RouteSaveFileObject : MonoBehaviour
         fileLocation = string.Empty;
         isFavorite = false;
         RoutingPaths.Clear();
+        ExtraStages.Clear();
 
         fileLocation = filepath;
         XmlDocument xml = new XmlDocument();
@@ -89,6 +79,35 @@ public class RouteSaveFileObject : MonoBehaviour
                                 }                                    
                             }
                             RoutingPaths.Add(new RoutingPathData(pathNumber, pathCode, (RoutingPathData.DisplayType)Enum.Parse(typeof(RoutingPathData.DisplayType), pathDisplay), stageKeys));
+                        }
+                    }
+                }
+                if (node.Name == "ExtraStages")
+                {
+                    foreach (XmlElement extraStage in node.ChildNodes)
+                    {
+                        if (extraStage.Name == "ExtraStage")
+                        {
+                            var level = extraStage.GetAttribute("level");
+                            var mission = extraStage.GetAttribute("mission");
+
+                            bool[] stageKeys = new bool[5];
+                            var keys = (XmlElement)extraStage.ChildNodes[0];
+                            if (keys.Name == "Keys")
+                            {
+                                stageKeys[0] = bool.Parse(keys.GetAttribute("key1"));
+                                stageKeys[1] = bool.Parse(keys.GetAttribute("key2"));
+                                stageKeys[2] = bool.Parse(keys.GetAttribute("key3"));
+                                stageKeys[3] = bool.Parse(keys.GetAttribute("key4"));
+                                stageKeys[4] = bool.Parse(keys.GetAttribute("key5"));
+                            }
+
+                            ExtraStages.Add(new ExtraStageData
+                            {
+                                levelName = level,
+                                missionString = mission,
+                                keys = stageKeys
+                            });
                         }
                     }
                 }

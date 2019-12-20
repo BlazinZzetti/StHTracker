@@ -41,9 +41,7 @@ public class PathRoutingManager : MonoBehaviour
     public Button SavedRouteSelectionPanelCloseButton;
     public ScrollRect SavedRouteSelectionPanelScrollView;
 
-    public GameObject ExtraStagesPanel;
-    public Button ExtraStagesPanelCloseButton;
-    public ScrollRect ExtraStagesPanelScrollView;
+    public ExtraStageManager ExtraStagesPanel;
 
     public GameObject SaveMessageOverwritePanel;
     public Text SaveMessageOverwriteFileNameText;
@@ -108,6 +106,8 @@ public class PathRoutingManager : MonoBehaviour
     RoutingLevel LethalHighway;
 
     RoutingLevel Westopolis;
+
+    List<RoutingLevel> AllRoutingLevels;
     #endregion
 
     public List<string> PathCodeByNumber;
@@ -119,6 +119,37 @@ public class PathRoutingManager : MonoBehaviour
         initializePathCodesByNumber();
 
         refreshSavedRouteFiles();
+
+        AllRoutingLevels = new List<RoutingLevel>()
+        {
+            GUNFortress,
+            BlackComet,
+            LavaShelter,
+            CosmicFall,
+            FinalHaunt,
+
+            TheARK,
+            AirFleet,
+            IronJungle,
+            SpaceGadget,
+            LostImpact,
+
+            CentralCity,
+            TheDoom,
+            SkyTroops,
+            MadMatrix,
+            DeathRuins,
+
+            CrypticCastle,
+            PrisonIsland,
+            CircusPark,
+
+            DigitalCircuit,
+            GlyphicCanyon,
+            LethalHighway,
+
+            Westopolis,
+        };
 
         NewGameToggle.isOn = false;
         NoCCGToggle.isOn = false;
@@ -132,7 +163,7 @@ public class PathRoutingManager : MonoBehaviour
         SavedRouteSelectionPanelCloseButton.onClick.AddListener(closeSavedRoutesSelection);
 
         ExtraStagesButton.onClick.AddListener(openExtraStages);
-        ExtraStagesPanelCloseButton.onClick.AddListener(closeExtraStages);
+        ExtraStagesPanel.CloseButton.onClick.AddListener(closeExtraStages);
 
         SaveRouteButton.onClick.AddListener(saveCurrentRoute);
 
@@ -557,8 +588,8 @@ public class PathRoutingManager : MonoBehaviour
 
     private void adjustExtraStagesSelectionViewSize()
     {
-        ExtraStagesPanelScrollView.content.sizeDelta
-            = new Vector2(ExtraStagesPanelScrollView.content.sizeDelta.x, ExtraStagesPanelScrollView.content.childCount * 30);
+        ExtraStagesPanel.content.sizeDelta
+            = new Vector2(ExtraStagesPanel.content.sizeDelta.x, ExtraStagesPanel.content.childCount * 30);
     }
 
     private void openSavedRoutesSelection()
@@ -574,12 +605,12 @@ public class PathRoutingManager : MonoBehaviour
 
     private void openExtraStages()
     {
-        ExtraStagesPanel.SetActive(true);
+        ExtraStagesPanel.gameObject.SetActive(true);
     }
 
     private void closeExtraStages()
     {
-        ExtraStagesPanel.SetActive(false);
+        ExtraStagesPanel.gameObject.SetActive(false);
     }
 
     private void saveCurrentRoute()
@@ -686,10 +717,30 @@ public class PathRoutingManager : MonoBehaviour
             pathsNote.AppendChild(pathDataNote);
         }
 
+        var extraStagesNode = xml.CreateElement("ExtraStages");
+        foreach (var extraStage in ExtraStagesPanel.ExtraStages)
+        {
+            var extraStageNote = xml.CreateElement("ExtraStage");
+            extraStageNote.SetAttribute("level", Common.LevelNames[extraStage.StageDropdown.value]);
+            extraStageNote.SetAttribute("mission", extraStage.MissionDropdown.options[extraStage.MissionDropdown.value].text);
+
+            var keysDataNote = xml.CreateElement("Keys");
+
+            keysDataNote.SetAttribute("key1", "false");
+            keysDataNote.SetAttribute("key2", "false");
+            keysDataNote.SetAttribute("key3", "false");
+            keysDataNote.SetAttribute("key4", "false");
+            keysDataNote.SetAttribute("key5", "false");
+
+            extraStageNote.AppendChild(keysDataNote);
+            extraStagesNode.AppendChild(extraStageNote);
+        }
+
         baseNode.AppendChild(NewGameNode);
         baseNode.AppendChild(NoCCGNode);
         baseNode.AppendChild(favoriteNode);
         baseNode.AppendChild(pathsNote);
+        baseNode.AppendChild(extraStagesNode);
 
         xml.AppendChild(baseNode);
 
@@ -767,6 +818,22 @@ public class PathRoutingManager : MonoBehaviour
                 break;
             }
         }
+
+        uint timeToCompleteExtraMissions = 0;
+        if (ExtraStagesPanel.ExtraStages.Count > 0)
+        {
+            foreach (var extraStage in ExtraStagesPanel.ExtraStages)
+            {
+                var stageName = Common.LevelNames[extraStage.MissionDropdown.value];
+                var missionLetter = Common.Levels.Find(l => l.Name == stageName).Missions[extraStage.MissionDropdown.value].ToString()[0];
+
+                var pointer = AllRoutingLevels.Find(rl => rl.Name == stageName);
+                timeToCompleteExtraMissions += processTiming(pointer, missionLetter);
+            }
+
+            outputString += "Time to Complete ExtraStages: " + timeToCompleteExtraMissions + Environment.NewLine;
+        }
+
         outputString += "Time to Complete All Paths: " + timeToComplete;
 
         OutputText.text = (unableToCompleteRoute != null) ? "Unable to complete route due to missing data." + Environment.NewLine + unableToCompleteRoute : outputString;
@@ -802,6 +869,28 @@ public class PathRoutingManager : MonoBehaviour
         }
 
         return timeToCompletePath;
+    }
+
+    private uint processTiming(RoutingLevel pointer, char missionCode)
+    {
+        uint timeToCompleteMission = 0;
+
+        bool[] keys = new bool[5];
+        UnlockableWeapons weaponStatus = new UnlockableWeapons();
+
+        //Find the IL to be used for timing.
+        var timeEntryToUse = Common.ShadowProfileData.FindTimeEntry(pointer.Name, MisionTypeLookup[missionCode], keys, weaponStatus, NoCCGToggle.isOn);
+
+        if (timeEntryToUse != null)
+        {
+            timeToCompleteMission += timeEntryToUse.Time;
+        }
+        else
+        {
+            unableToCompleteRoute = pointer.Name + " " + MisionTypeLookup[missionCode];
+        }
+
+        return timeToCompleteMission;
     }
 
     private void refreshInterface()
@@ -885,12 +974,23 @@ public class PathRoutingManager : MonoBehaviour
         }
         RoutingPaths.Clear();
 
+        foreach (var extraStage in ExtraStagesPanel.ExtraStages)
+        {
+            Destroy(extraStage.gameObject);
+        }
+        ExtraStagesPanel.ExtraStages.Clear();        
+
         NewGameToggle.isOn = routingSaveFile.isNewFile;
         NoCCGToggle.isOn = routingSaveFile.isNoCCG;
 
         foreach (var routingPath in routingSaveFile.RoutingPaths)
         {
             addRoutingPath(routingPath);
+        }
+
+        foreach (var extraStage in routingSaveFile.ExtraStages)
+        {
+            ExtraStagesPanel.AddStage(extraStage);
         }
 
         lastLoadedSaveFile = routingSaveFile.fileLocation;
