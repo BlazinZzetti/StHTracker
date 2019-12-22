@@ -87,7 +87,19 @@ public class TimeEntry
         }
         set
         {
-            unlockableWeapons.SamuraiBlade = value;
+            switch (value)
+            {
+                case UnlockableWeapons.WeaponState.Level1:
+                    unlockableWeapons.GUNFortressDarkComplete();
+                    break;
+                case UnlockableWeapons.WeaponState.Level2:
+                    unlockableWeapons.GUNFortressDarkComplete();
+                    unlockableWeapons.GUNFortressHeroComplete();
+                    break;
+                case UnlockableWeapons.WeaponState.Not_Available:
+                    unlockableWeapons.samuraiBladeReset();
+                    break;
+            }
         }
     }
     public UnlockableWeapons.WeaponState SatelliteLaser
@@ -98,7 +110,19 @@ public class TimeEntry
         }
         set
         {
-            unlockableWeapons.SatelliteLaser = value;
+            switch(value)
+            {
+                case UnlockableWeapons.WeaponState.Level1:
+                    unlockableWeapons.BlackCometDarkComplete();
+                break;
+                case UnlockableWeapons.WeaponState.Level2:
+                    unlockableWeapons.BlackCometDarkComplete();
+                unlockableWeapons.BlackCometHeroComplete();
+                break;
+                case UnlockableWeapons.WeaponState.Not_Available:
+                    unlockableWeapons.satelliteLaserReset();
+                break;
+            }
         }
     }
     public UnlockableWeapons.WeaponState EggVacuum
@@ -109,7 +133,19 @@ public class TimeEntry
         }
         set
         {
-            unlockableWeapons.EggVacuum = value;
+            switch(value)
+            {
+                case UnlockableWeapons.WeaponState.Level1:
+                    unlockableWeapons.LavaShelterDarkComplete();
+                break;
+                case UnlockableWeapons.WeaponState.Level2:
+                    unlockableWeapons.LavaShelterDarkComplete();
+                unlockableWeapons.LavaShelterHeroComplete();
+                break;
+                case UnlockableWeapons.WeaponState.Not_Available:
+                    unlockableWeapons.eggVacuumReset();
+                break;
+            }
         }
     }
     public UnlockableWeapons.WeaponState OmochaoGun
@@ -120,7 +156,19 @@ public class TimeEntry
         }
         set
         {
-            unlockableWeapons.OmochaoGun = value;
+            switch (value)
+            {
+                case UnlockableWeapons.WeaponState.Level1:
+                    unlockableWeapons.CosmicFallDarkComplete();
+                    break;
+                case UnlockableWeapons.WeaponState.Level2:
+                    unlockableWeapons.CosmicFallDarkComplete();
+                    unlockableWeapons.CosmicFallHeroComplete();
+                    break;
+                case UnlockableWeapons.WeaponState.Not_Available:
+                    unlockableWeapons.omochaoGunReset();
+                    break;
+            }
         }
     }
     public UnlockableWeapons.WeaponState HealCannon
@@ -131,7 +179,19 @@ public class TimeEntry
         }
         set
         {
-            unlockableWeapons.HealCannon = value;
+            switch (value)
+            {
+                case UnlockableWeapons.WeaponState.Level1:
+                    unlockableWeapons.FinalHauntDarkComplete();
+                    break;
+                case UnlockableWeapons.WeaponState.Level2:
+                    unlockableWeapons.FinalHauntDarkComplete();
+                    unlockableWeapons.FinalHauntHeroComplete();
+                    break;
+                case UnlockableWeapons.WeaponState.Not_Available:
+                    unlockableWeapons.healCannonReset();
+                    break;
+            }
         }
     }
 

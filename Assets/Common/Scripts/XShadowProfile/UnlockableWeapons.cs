@@ -11,70 +11,206 @@ public class UnlockableWeapons
         Level1,
     }
 
-    private WeaponState samuraiBlade = WeaponState.Not_Available;
-    private WeaponState satelliteLaser = WeaponState.Not_Available;
-    private WeaponState eggVacuum = WeaponState.Not_Available;
-    private WeaponState omochaoGun = WeaponState.Not_Available;
-    private WeaponState healCannon = WeaponState.Not_Available;
+    private bool[] samuraiBlade = new bool[2];
+    private bool[] satelliteLaser = new bool[2];
+    private bool[] eggVacuum = new bool[2];
+    private bool[] omochaoGun = new bool[2];
+    private bool[] healCannon = new bool[2];
 
     public UnlockableWeapons()
     {
-
+        samuraiBlade = new bool[2];
+        satelliteLaser = new bool[2];
+        eggVacuum = new bool[2];
+        omochaoGun = new bool[2];
+        healCannon = new bool[2];
     }
 
     public WeaponState SamuraiBlade
     {
         get
         {
-            return samuraiBlade;
-        }
-        set
-        {
-            samuraiBlade = value;
+            if (samuraiBlade[0])
+            {
+                if (samuraiBlade[1])
+                {
+                    return WeaponState.Level2;
+                }
+                else
+                {
+                    return WeaponState.Level1;
+                }
+            }
+            if (samuraiBlade[1])
+            {
+                return WeaponState.Level1;
+            }
+            return WeaponState.Not_Available;
         }
     }
     public WeaponState SatelliteLaser
     {
         get
         {
-            return satelliteLaser;
-        }
-        set
-        {
-            satelliteLaser = value;
+            if (satelliteLaser[0])
+            {
+                if (satelliteLaser[1])
+                {
+                    return WeaponState.Level2;
+                }
+                else
+                {
+                    return WeaponState.Level1;
+                }
+            }
+            if (satelliteLaser[1])
+            {
+                return WeaponState.Level1;
+            }
+            return WeaponState.Not_Available;
         }
     }
     public WeaponState EggVacuum
     {
         get
         {
-            return eggVacuum;
-        }
-        set
-        {
-            eggVacuum = value;
+            if (eggVacuum[0])
+            {
+                if (eggVacuum[1])
+                {
+                    return WeaponState.Level2;
+                }
+                else
+                {
+                    return WeaponState.Level1;
+                }
+            }
+            if (eggVacuum[1])
+            {
+                return WeaponState.Level1;
+            }
+            return WeaponState.Not_Available;
         }
     }
     public WeaponState OmochaoGun
     {
         get
         {
-            return omochaoGun;
-        }
-        set
-        {
-            omochaoGun = value;
+            if (omochaoGun[0])
+            {
+                if (omochaoGun[1])
+                {
+                    return WeaponState.Level2;
+                }
+                else
+                {
+                    return WeaponState.Level1;
+                }
+            }
+            if (omochaoGun[1])
+            {
+                return WeaponState.Level1;
+            }
+            return WeaponState.Not_Available;
         }
     }
     public WeaponState HealCannon
     {
         get
         {
-            return healCannon;
+            if (healCannon[0])
+            {
+                if (healCannon[1])
+                {
+                    return WeaponState.Level2;
+                }
+                else
+                {
+                    return WeaponState.Level1;
+                }
+            }
+            if (healCannon[1])
+            {
+                return WeaponState.Level1;
+            }
+            return WeaponState.Not_Available;
         }
-        set
-        {
-            healCannon = value;
-        }
+    }
+
+    public void samuraiBladeReset()
+    {
+        samuraiBlade = new bool[2];
+    }
+    public void satelliteLaserReset()
+    {
+        satelliteLaser = new bool[2];
+    }
+    public void eggVacuumReset()
+    {
+        eggVacuum = new bool[2];
+    }
+    public void omochaoGunReset()
+    {
+        omochaoGun = new bool[2];
+    }
+    public void healCannonReset()
+    {
+        healCannon = new bool[2];
+    }
+
+
+
+
+
+
+
+    public void GUNFortressDarkComplete()
+    {
+        samuraiBlade[0] = true;
+    }
+
+    public void GUNFortressHeroComplete()
+    {
+        samuraiBlade[1] = true;
+    }
+
+    public void BlackCometDarkComplete()
+    {
+        satelliteLaser[0] = true;
+    }
+
+    public void BlackCometHeroComplete()
+    {
+        satelliteLaser[1] = true;
+    }
+
+    public void LavaShelterDarkComplete()
+    {
+        eggVacuum[0] = true;
+    }
+
+    public void LavaShelterHeroComplete()
+    {
+        eggVacuum[1] = true;
+    }
+
+    public void CosmicFallDarkComplete()
+    {
+        omochaoGun[0] = true;
+    }
+
+    public void CosmicFallHeroComplete()
+    {
+        omochaoGun[1] = true;
+    }
+
+    public void FinalHauntDarkComplete()
+    {
+        healCannon[0] = true;
+    }
+
+    public void FinalHauntHeroComplete()
+    {
+        healCannon[1] = true;
     }
 }

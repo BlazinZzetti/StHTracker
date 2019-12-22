@@ -93,6 +93,8 @@ public class ExtraStageManager : MonoBehaviour
 
         UpdateMissionDropdown(extraStage);
 
+        extraStage.MissionDropdown.value = extraStage.MissionDropdown.options.IndexOf(extraStage.MissionDropdown.options.Find(s => s.text == extraStageData.missionString));
+
         extraStage.StageDropdown.onValueChanged.AddListener((value) => UpdateMissionDropdown(extraStage));
 
         extraStage.DeleteButton.onClick.AddListener(() => OnExtraStageDeleteButtonPressed(extraStage));

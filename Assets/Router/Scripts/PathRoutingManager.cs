@@ -112,6 +112,8 @@ public class PathRoutingManager : MonoBehaviour
 
     public List<string> PathCodeByNumber;
 
+    UnlockableWeapons weaponStatus = new UnlockableWeapons();
+
     void Awake()
     {
         initializeCutsceneData();
@@ -589,7 +591,7 @@ public class PathRoutingManager : MonoBehaviour
     private void adjustExtraStagesSelectionViewSize()
     {
         ExtraStagesPanel.content.sizeDelta
-            = new Vector2(ExtraStagesPanel.content.sizeDelta.x, ExtraStagesPanel.content.childCount * 30);
+            = new Vector2(ExtraStagesPanel.content.sizeDelta.x, ExtraStagesPanel.content.childCount * 50);
     }
 
     private void openSavedRoutesSelection()
@@ -726,11 +728,11 @@ public class PathRoutingManager : MonoBehaviour
 
             var keysDataNote = xml.CreateElement("Keys");
 
-            keysDataNote.SetAttribute("key1", "false");
-            keysDataNote.SetAttribute("key2", "false");
-            keysDataNote.SetAttribute("key3", "false");
-            keysDataNote.SetAttribute("key4", "false");
-            keysDataNote.SetAttribute("key5", "false");
+            keysDataNote.SetAttribute("key1", extraStage.Key1Toggle.isOn.ToString());
+            keysDataNote.SetAttribute("key2", extraStage.Key2Toggle.isOn.ToString());
+            keysDataNote.SetAttribute("key3", extraStage.Key3Toggle.isOn.ToString());
+            keysDataNote.SetAttribute("key4", extraStage.Key4Toggle.isOn.ToString());
+            keysDataNote.SetAttribute("key5", extraStage.Key5Toggle.isOn.ToString());
 
             extraStageNote.AppendChild(keysDataNote);
             extraStagesNode.AppendChild(extraStageNote);
@@ -757,6 +759,22 @@ public class PathRoutingManager : MonoBehaviour
     private void calculatePaths()
     {
         unableToCompleteRoute = null;
+        weaponStatus = new UnlockableWeapons();
+
+        if(NewGameToggle.isOn)
+        {
+            weaponStatus.GUNFortressDarkComplete();
+            weaponStatus.GUNFortressHeroComplete();
+            weaponStatus.BlackCometDarkComplete();
+            weaponStatus.BlackCometHeroComplete();
+            weaponStatus.LavaShelterDarkComplete();
+            weaponStatus.LavaShelterHeroComplete();
+            weaponStatus.CosmicFallDarkComplete();
+            weaponStatus.CosmicFallHeroComplete();
+            weaponStatus.FinalHauntDarkComplete();
+            weaponStatus.FinalHauntHeroComplete();
+        }
+
         foreach (var cs in CutsceneData)
         {
             cs.Skippable = NewGameToggle.isOn;
@@ -765,91 +783,74 @@ public class PathRoutingManager : MonoBehaviour
         uint timeToComplete = 0;
         string outputString = string.Empty;
 
-        foreach (var rp in RoutingPaths)
+        if (Common.ShadowProfileData != null)
         {
-            var code = rp.PathData.ValidPathCode;
-            uint timeToCompletePath = 0;
-
-            RoutingLevel pointer = Westopolis;
-            for (int i = 0; i < 6 && unableToCompleteRoute == null; i++)
+            foreach (var rp in RoutingPaths)
             {
-                switch (code[i])
+                var code = rp.PathData.ValidPathCode;
+                uint timeToCompletePath = 0;
+
+                RoutingLevel pointer = Westopolis;
+                for (int i = 0; i < 6; i++)
                 {
-                    case 'D':
-                        timeToCompletePath += processTiming(ref pointer, code[i], pointer.DarkCutscenes, pointer.DarkEndingDestination);
-                        break;
-                    case 'N':
-                        timeToCompletePath += processTiming(ref pointer, code[i], pointer.NormalCutscenes, pointer.NormalEndingDestination);
-                        break;
-                    case 'H':
-                        timeToCompletePath += processTiming(ref pointer, code[i], pointer.HeroCutscenes, pointer.HeroEndingDestination);
-                        break;
-                    //case 'D':
-                    //    foreach (var ci in pointer.DarkCutscenes)
-                    //    {
-                    //        timeToCompletePath += CutsceneData[ci].GetTime();
-                    //        CutsceneData[ci].Skippable = true;
-                    //    }
-                    //    pointer = pointer.DarkEndingDestination;
-                    //    break;
-                    //case 'N':
-                    //    foreach (var ci in pointer.NormalCutscenes)
-                    //    {
-                    //        timeToCompletePath += CutsceneData[ci].GetTime();
-                    //        CutsceneData[ci].Skippable = true;
-                    //    }
-                    //    pointer = pointer.NormalEndingDestination;
-                    //    break;
-                    //case 'H':
-                    //    foreach (var ci in pointer.HeroCutscenes)
-                    //    {
-                    //        timeToCompletePath += CutsceneData[ci].GetTime();
-                    //        CutsceneData[ci].Skippable = true;
-                    //    }
-                    //    pointer = pointer.HeroEndingDestination;
-                    //    break;
+                    bool[] keys = new bool[]
+                    {
+                    rp.PathData.StageKeys[i,0],
+                    rp.PathData.StageKeys[i,1],
+                    rp.PathData.StageKeys[i,2],
+                    rp.PathData.StageKeys[i,3],
+                    rp.PathData.StageKeys[i,4]
+                    };
+                    switch (code[i])
+                    {
+                        case 'D':
+                            timeToCompletePath += processTiming(ref pointer, code[i], keys, pointer.DarkCutscenes, pointer.DarkEndingDestination);
+                            break;
+                        case 'N':
+                            timeToCompletePath += processTiming(ref pointer, code[i], keys, pointer.NormalCutscenes, pointer.NormalEndingDestination);
+                            break;
+                        case 'H':
+                            timeToCompletePath += processTiming(ref pointer, code[i], keys, pointer.HeroCutscenes, pointer.HeroEndingDestination);
+                            break;
+                    }
                 }
+                timeToComplete += timeToCompletePath;
+                outputString += "Time to Complete Path #" + rp.PathData.ValidPathNumber + " - " + rp.PathData.ValidPathCode + ":" + ((rp.PathData.ValidPathNumber < 100) ? "\t\t" : "\t") + TimeInString(timeToCompletePath) + Environment.NewLine;
             }
-            timeToComplete += timeToCompletePath;
-            outputString += "Time to Complete Path #" + rp.PathData.ValidPathNumber + " - " + rp.PathData.ValidPathCode + ": " + timeToCompletePath + Environment.NewLine;
 
-            if (unableToCompleteRoute != null)
+            uint timeToCompleteExtraMissions = 0;
+            if (ExtraStagesPanel.ExtraStages.Count > 0)
             {
-                break;
-            }
-        }
+                foreach (var extraStage in ExtraStagesPanel.ExtraStages)
+                {
+                    var stageName = Common.LevelNames[extraStage.StageDropdown.value];
+                    var missionLetter = Common.Levels.Find(l => l.Name == stageName).Missions[extraStage.MissionDropdown.value].ToString()[0];
 
-        uint timeToCompleteExtraMissions = 0;
-        if (ExtraStagesPanel.ExtraStages.Count > 0)
+                    var pointer = AllRoutingLevels.Find(rl => rl.Name == stageName);
+                    timeToCompleteExtraMissions += processTiming(pointer, missionLetter, extraStage.Data.keys);
+                }
+
+                outputString += "Time to Complete ExtraStages: " + TimeInString(timeToCompleteExtraMissions) + Environment.NewLine;
+            }
+            timeToComplete += timeToCompleteExtraMissions;
+
+            outputString += "Time to Complete All Paths: " + TimeInString(timeToComplete);
+
+            OutputText.text = (unableToCompleteRoute != null) ? "Unable to complete route due to missing data." + Environment.NewLine + unableToCompleteRoute : outputString;
+        }
+        else
         {
-            foreach (var extraStage in ExtraStagesPanel.ExtraStages)
-            {
-                var stageName = Common.LevelNames[extraStage.MissionDropdown.value];
-                var missionLetter = Common.Levels.Find(l => l.Name == stageName).Missions[extraStage.MissionDropdown.value].ToString()[0];
-
-                var pointer = AllRoutingLevels.Find(rl => rl.Name == stageName);
-                timeToCompleteExtraMissions += processTiming(pointer, missionLetter);
-            }
-
-            outputString += "Time to Complete ExtraStages: " + timeToCompleteExtraMissions + Environment.NewLine;
+            OutputText.text = "Unable to complete route due to missing shadow profile data.";
         }
-
-        outputString += "Time to Complete All Paths: " + timeToComplete;
-
-        OutputText.text = (unableToCompleteRoute != null) ? "Unable to complete route due to missing data." + Environment.NewLine + unableToCompleteRoute : outputString;
-
         OutputPanel.SetActive(true);
     }
 
-    private uint processTiming(ref RoutingLevel pointer, char missionCode, List<int> cutscenes, RoutingLevel endingDestination)
+    private uint processTiming(ref RoutingLevel pointer, char missionCode, bool[]missionKeys, List<int> cutscenes, RoutingLevel endingDestination)
     {
         uint timeToCompletePath = 0;
 
-        bool[] keys = new bool[5];
-        UnlockableWeapons weaponStatus = new UnlockableWeapons();
-
         //Find the IL to be used for timing.
-        var timeEntryToUse = Common.ShadowProfileData.FindTimeEntry(pointer.Name, MisionTypeLookup[missionCode], keys, weaponStatus, NoCCGToggle.isOn);
+        var timeEntryToUse = Common.ShadowProfileData.FindTimeEntry(pointer.Name, MisionTypeLookup[missionCode], missionKeys, weaponStatus, NoCCGToggle.isOn);
 
         if (timeEntryToUse != null)
         {
@@ -862,24 +863,81 @@ public class PathRoutingManager : MonoBehaviour
             }
 
             pointer = endingDestination;
+
+            if (timeEntryToUse.Level.Name == "GUN Fortress")
+            {
+                if (timeEntryToUse.Mission == ProfileLevel.MissionType.Dark)
+                {
+                    weaponStatus.GUNFortressDarkComplete();
+                }
+                if (timeEntryToUse.Mission == ProfileLevel.MissionType.Hero)
+                {
+                    weaponStatus.GUNFortressHeroComplete();
+                }
+            }
+
+            if (timeEntryToUse.Level.Name == "Black Comet")
+            {
+                if (timeEntryToUse.Mission == ProfileLevel.MissionType.Dark)
+                {
+                    weaponStatus.BlackCometDarkComplete();
+                }
+                if (timeEntryToUse.Mission == ProfileLevel.MissionType.Hero)
+                {
+                    weaponStatus.BlackCometHeroComplete();
+                }
+            }
+
+            if (timeEntryToUse.Level.Name == "Lava Shelter")
+            {
+                if (timeEntryToUse.Mission == ProfileLevel.MissionType.Dark)
+                {
+                    weaponStatus.LavaShelterDarkComplete();
+                }
+                if (timeEntryToUse.Mission == ProfileLevel.MissionType.Hero)
+                {
+                    weaponStatus.LavaShelterHeroComplete();
+                }
+            }
+
+            if (timeEntryToUse.Level.Name == "Cosmic Fall")
+            {
+                if (timeEntryToUse.Mission == ProfileLevel.MissionType.Dark)
+                {
+                    weaponStatus.CosmicFallDarkComplete();
+                }
+                if (timeEntryToUse.Mission == ProfileLevel.MissionType.Hero)
+                {
+                    weaponStatus.CosmicFallHeroComplete();
+                }
+            }
+
+            if (timeEntryToUse.Level.Name == "Final Haunt")
+            {
+                if (timeEntryToUse.Mission == ProfileLevel.MissionType.Dark)
+                {
+                    weaponStatus.FinalHauntDarkComplete();
+                }
+                if (timeEntryToUse.Mission == ProfileLevel.MissionType.Hero)
+                {
+                    weaponStatus.FinalHauntHeroComplete();
+                }
+            }
         }
         else
         {
-            unableToCompleteRoute = pointer.Name + " " + MisionTypeLookup[missionCode];
+            unableToCompleteRoute += pointer.Name + " " + MisionTypeLookup[missionCode] + Environment.NewLine;
         }
 
         return timeToCompletePath;
     }
 
-    private uint processTiming(RoutingLevel pointer, char missionCode)
+    private uint processTiming(RoutingLevel pointer, char missionCode, bool[] missionKeys)
     {
         uint timeToCompleteMission = 0;
 
-        bool[] keys = new bool[5];
-        UnlockableWeapons weaponStatus = new UnlockableWeapons();
-
         //Find the IL to be used for timing.
-        var timeEntryToUse = Common.ShadowProfileData.FindTimeEntry(pointer.Name, MisionTypeLookup[missionCode], keys, weaponStatus, NoCCGToggle.isOn);
+        var timeEntryToUse = Common.ShadowProfileData.FindTimeEntry(pointer.Name, MisionTypeLookup[missionCode], missionKeys, weaponStatus, NoCCGToggle.isOn);
 
         if (timeEntryToUse != null)
         {
@@ -887,7 +945,7 @@ public class PathRoutingManager : MonoBehaviour
         }
         else
         {
-            unableToCompleteRoute = pointer.Name + " " + MisionTypeLookup[missionCode];
+            unableToCompleteRoute += pointer.Name + " " + MisionTypeLookup[missionCode] + Environment.NewLine;
         }
 
         return timeToCompleteMission;
@@ -1051,5 +1109,23 @@ public class PathRoutingManager : MonoBehaviour
         }
 
         refreshInterface();
+    }
+
+    public uint[] TimeInSegments(uint milliseconds)
+    {
+        var hours = (milliseconds / 3600000);
+        var minutes = (milliseconds - (hours * 3600000)) / 60000;
+        var seconds = (milliseconds - (hours * 3600000) - (minutes * 60000)) / 1000;
+        var milli = (milliseconds - (hours * 3600000) - (minutes * 60000) - (seconds * 1000));
+
+        uint[] returnTime = new uint[4] { hours, minutes, seconds, milli };
+
+        return returnTime;
+    }
+
+    public string TimeInString(uint milliseconds)
+    {
+        var timeInSegments = TimeInSegments(milliseconds);
+        return timeInSegments[0].ToString("00") + ":" + timeInSegments[1].ToString("00") + ":" + timeInSegments[2].ToString("00") + "." + (timeInSegments[3] / 10).ToString("00");
     }
 }
