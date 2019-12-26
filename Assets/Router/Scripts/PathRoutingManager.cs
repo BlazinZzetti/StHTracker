@@ -116,6 +116,8 @@ public class PathRoutingManager : MonoBehaviour
 
     void Awake()
     {
+        Common.InitializeSaveFolder();
+        Common.LoadConfigFile();
         initializeCutsceneData();
         initializeRoutingLevels();
         initializePathCodesByNumber();

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml;
 
 public static class Common
 {
+    public static string XShadowProfileLocation;
     public static XShadowProfileData ShadowProfileData;
 
     private static List<ProfileLevel> levels;
@@ -50,35 +52,52 @@ public static class Common
 
     public static string SaveFolderPath
     {
-        get { return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\StHTracker"; }
+        get
+        {
+            if (!Directory.Exists((Environment.SpecialFolder.MyDocuments) + "\\StHTracker"))
+            {
+                Directory.CreateDirectory((Environment.SpecialFolder.MyDocuments) + "\\StHTracker");
+            }
+            return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\StHTracker";
+        }
     }
 
     public static string SavedRoutesFolderPath
     {
-        get { return SaveFolderPath + "\\SavedRoutes"; }
+        get
+        {
+            if (!Directory.Exists(SaveFolderPath + "\\SavedRoutes"))
+            {
+                Directory.CreateDirectory(SaveFolderPath + "\\SavedRoutes");
+            }
+            return SaveFolderPath + "\\SavedRoutes";
+        }
     }
 
     public static string TrackerSavesFolderPath
     {
-        get { return SaveFolderPath + "\\TrackerSaves"; }
+        get
+        {
+            if (!Directory.Exists(SaveFolderPath + "\\TrackerSaves"))
+            {
+                Directory.CreateDirectory(SaveFolderPath + "\\TrackerSaves");
+            }
+            return SaveFolderPath + "\\TrackerSaves";
+        }
+    }
+
+    public static string ConfigFilePath
+    {
+        get
+        {
+            return SaveFolderPath + "\\config.xconfig";
+        }
     }
 
     public static void InitializeSaveFolder()
     {
-        if (!Directory.Exists(SaveFolderPath))
-        {
-            Directory.CreateDirectory(SaveFolderPath);
-        }
-
-        if (!Directory.Exists(SavedRoutesFolderPath))
-        {
-            Directory.CreateDirectory(SavedRoutesFolderPath);
-        }
-
-        if (!Directory.Exists(TrackerSavesFolderPath))
-        {
-            Directory.CreateDirectory(TrackerSavesFolderPath);
-        }
+        //Because we are initializing folders when we are trying to access them, this call will create the folders we need.
+        string initialize = TrackerSavesFolderPath + SavedRoutesFolderPath;       
     }
 
     public static void InitalizeLevelData()
@@ -222,5 +241,44 @@ public static class Common
             Name = "The Last Way",
             Missions = new List<ProfileLevel.MissionType>() { ProfileLevel.MissionType.Normal }
         });
+    }
+
+    internal static void LoadConfigFile()
+    {
+        XmlDocument xml = new XmlDocument();
+
+        if (!File.Exists(ConfigFilePath))
+        {
+            SaveConfigFile();
+        }
+
+        xml.Load(ConfigFilePath);
+
+        //Get Database Location stored in configXml.
+        foreach (XmlElement node in xml.DocumentElement)
+        {
+            if (node.Name == "XShadowProfileLocation")
+            {
+                XShadowProfileLocation = node.InnerText;
+            }
+        }
+    }
+
+    public static void SaveConfigFile()
+    {
+        XmlDocument xml = new XmlDocument();
+
+        xml = new XmlDocument();
+
+        var baseNode = xml.CreateElement("Config");
+
+        var xShadowProfileLocationNode = xml.CreateElement("XShadowProfileLocation");
+        xShadowProfileLocationNode.InnerText = XShadowProfileLocation;
+
+        baseNode.AppendChild(xShadowProfileLocationNode);
+
+        xml.AppendChild(baseNode);
+
+        xml.Save(ConfigFilePath);
     }
 }

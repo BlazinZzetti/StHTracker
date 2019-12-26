@@ -80,7 +80,10 @@ public class TrackerManager : MonoBehaviour
     {
         Common.InitalizeLevelData();
         Common.InitializeSaveFolder();
-        Common.ShadowProfileData = new XShadowProfileData(Common.XShadowProfileLocation);
+        if (!string.IsNullOrEmpty(Common.XShadowProfileLocation))
+        {
+            Common.ShadowProfileData = new XShadowProfileData(Common.XShadowProfileLocation);
+        }
 
         ThreeMissionLevels = new List<ThreeMissionControl> { (ThreeMissionControl)WestopolisControl,
                                                              (ThreeMissionControl)GlyphicCanyonControl,

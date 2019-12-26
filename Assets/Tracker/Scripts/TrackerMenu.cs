@@ -38,7 +38,9 @@ public class TrackerMenu : MonoBehaviour
 
         if (result == System.Windows.Forms.DialogResult.OK && File.Exists(ofd.FileName))
         {
+            Common.XShadowProfileLocation = ofd.FileName;
             Common.ShadowProfileData = new XShadowProfileData(ofd.FileName);
+            Common.SaveConfigFile();
         }
     }
 
