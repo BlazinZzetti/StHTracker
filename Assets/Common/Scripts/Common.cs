@@ -54,9 +54,9 @@ public static class Common
     {
         get
         {
-            if (!Directory.Exists((Environment.SpecialFolder.MyDocuments) + "\\StHTracker"))
+            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\StHTracker"))
             {
-                Directory.CreateDirectory((Environment.SpecialFolder.MyDocuments) + "\\StHTracker");
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\StHTracker");
             }
             return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\StHTracker";
         }

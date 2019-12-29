@@ -13,12 +13,6 @@ public class TrackerMenu : MonoBehaviour
 
     public TrackerManager Manager;
 
-    [DllImport("user32.dll")]
-    private static extern void OpenFileDialog();
-
-    //[DllImport("user32.dll")]
-    //private static extern void SaveFileDialog();
-
     // Use this for initialization
     void Start ()
     {
