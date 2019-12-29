@@ -7,21 +7,11 @@ using System.Collections.Generic;
 
 public class TrackerManager : MonoBehaviour
 {
-    public Text ARankTrackerText;
-    public Text KeyTrackerText;
-    public Text PathTrackerText;
-    public Text TotalTrackerText;
-    public Text EstimatedTrackerText;
-
-    public Toggle ARanksToggle;
-    public Toggle KeysToggle;
-    public Toggle PathsToggle;
-    public Toggle TotalToggle;
-    public Toggle EstToggle;
-    public Toggle AutoSaveToggle;
-
     //Path Tracker Variables
     int numOfPaths = 0;
+
+    public PercentageDisplayManager PercentageDisplayManager;
+
     public PathViewerControl PathControl;
     public Canvas PathControlMenu;
 
@@ -155,10 +145,7 @@ public class TrackerManager : MonoBehaviour
 
         updatePaths();
 
-        updateTrackerTextObjects();
-
-        updateTrackersEnabled();
-
+        PercentageDisplayManager.UpdateTrackerTextObjects(totalMissionsCompleted, numOfKeys, 0, numOfPaths);
     }
 
     void updateARanks()
@@ -203,29 +190,6 @@ public class TrackerManager : MonoBehaviour
                 numOfPaths++;
             }
         }
-    }
-
-    void updateTrackerTextObjects()
-    {
-        //Estimated Tracker Weights
-        var totalPaths = 326 * 4;
-
-        ARankTrackerText.text =     "A Ranks: " + totalMissionsCompleted + " / 71 " + ((totalMissionsCompleted / 71.0f) * 100).ToString("f2") + "%";
-        KeyTrackerText.text =       "Keys: " + numOfKeys + " / 115 " + ((numOfKeys / 115.0f) * 100).ToString("f2") + "%";
-        PathTrackerText.text =      "Paths: " + numOfPaths + " / 326 " + ((numOfPaths / 326.0f) * 100).ToString("f2") + "%";
-        TotalTrackerText.text =     "Total: " + (totalMissionsCompleted + numOfKeys + numOfPaths) + " / 512 " + (((totalMissionsCompleted + numOfKeys + numOfPaths) / 512.0f) * 100).ToString("f2") + "%";
-        EstimatedTrackerText.text = (((totalMissionsCompleted + (numOfKeys) + (numOfPaths * 4)) / (float)(71 + 115 + totalPaths)) * 100).ToString("f2") + "%";
-    }
-
-    void updateTrackersEnabled()
-    {
-        ARankTrackerText.enabled = ARanksToggle.isOn;
-        KeyTrackerText.enabled = KeysToggle.isOn;
-        PathTrackerText.enabled = PathsToggle.isOn;
-        TotalTrackerText.enabled = TotalToggle.isOn;
-        
-        EstimatedTrackerText.enabled = EstToggle.isOn;
-        EstimatedTrackerText.transform.GetChild(0).gameObject.SetActive(EstToggle.isOn);
     }
 
     private IEnumerator LoadFileFirstTime()
@@ -440,11 +404,7 @@ public class TrackerManager : MonoBehaviour
     }
 
     void togglePathMenu()
-    {
-        if (PathControlMenu.enabled && AutoSaveToggle.isOn)
-        {
-            SaveData();
-        }
+    { 
         PathControlMenu.enabled = !PathControlMenu.enabled;
     }
 }
