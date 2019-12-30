@@ -26,9 +26,12 @@ public class TrackerManager : MonoBehaviour
     int numOfKeys = 0;
     private bool KeyEditMode = false;
 
+    int numOfWeapons = 0;
+
     //A Rank Tracker Variables
     List<ThreeMissionControl> ThreeMissionLevels = new List<ThreeMissionControl>();
     List<TwoMissionControl> TwoMissionLevels = new List<TwoMissionControl>();
+    List<BossControl> EndBosses = new List<BossControl>();
     int totalMissionsCompleted = 0;
 
     #region Mission and Boss Controls
@@ -62,7 +65,21 @@ public class TrackerManager : MonoBehaviour
 
     public MissionControl TheLastWayControl;
 
-    public List<BossControl> Bosses = new List<BossControl>(); 
+    //MidBosses
+    public List<BossControl> Bosses = new List<BossControl>();
+
+    public BossControl SonicAndDiablonPureDarkControl;
+    public BossControl BlackDoomPureDarkControl;
+    public BossControl SonicAndDiablonDarkControl;
+    public BossControl EggDealerDarkControl;
+    public BossControl EggDealerNormalDarkControl;
+    public BossControl EggDealerNormalHeroControl;
+    public BossControl EggDealerHeroControl;
+    public BossControl BlackDoomHeroControl;
+    public BossControl SonicAndDiablonPureHeroControl;
+    public BossControl BlackDoomPureHeroControl;
+    public BossControl DevilDoomControl;
+
     #endregion
 
     // Use this for initialization
@@ -98,6 +115,18 @@ public class TrackerManager : MonoBehaviour
                                                          (TwoMissionControl)LavaShelterControl,
                                                          (TwoMissionControl)CosmicFallControl,
                                                          (TwoMissionControl)FinalHauntControl };
+
+        EndBosses = new List<BossControl> { SonicAndDiablonPureDarkControl,
+                                            BlackDoomPureDarkControl,
+                                            SonicAndDiablonDarkControl,
+                                            EggDealerDarkControl,
+                                            EggDealerNormalDarkControl,
+                                            EggDealerNormalHeroControl,
+                                            EggDealerHeroControl,
+                                            BlackDoomHeroControl,
+                                            SonicAndDiablonPureHeroControl,
+                                            BlackDoomPureHeroControl,
+                                            DevilDoomControl};
 
         //StartCoroutine("LoadFileFirstTime");
     }
@@ -143,9 +172,11 @@ public class TrackerManager : MonoBehaviour
 
         updateKeys();
 
+        updateWeapons();
+
         updatePaths();
 
-        PercentageDisplayManager.UpdateTrackerTextObjects(totalMissionsCompleted, numOfKeys, 0, numOfPaths);
+        PercentageDisplayManager.UpdateTrackerTextObjects(totalMissionsCompleted, numOfKeys, numOfWeapons, numOfPaths);
     }
 
     void updateARanks()
@@ -153,14 +184,7 @@ public class TrackerManager : MonoBehaviour
         totalMissionsCompleted = 0;
         totalMissionsCompleted += checkThreeMissionLevelsComplete();
         totalMissionsCompleted += checkTwoMissionLevelsComplete();
-
-        foreach (var boss in Bosses)
-        {
-            if (boss.BossComplete.enabled)
-            {
-                totalMissionsCompleted++;
-            }
-        }
+        totalMissionsCompleted += checkBossesComplete();
     }
 
     void updateKeys()
@@ -178,6 +202,19 @@ public class TrackerManager : MonoBehaviour
         }
 
         numOfKeys += TheLastWayControl.NumOfKeys;
+    }
+
+    void updateWeapons()
+    {
+        numOfWeapons = 0;
+
+        foreach (var endBoss in EndBosses)
+        {
+            if (endBoss.BossComplete.enabled)
+            {
+                numOfWeapons++;
+            }
+        }
     }
 
     void updatePaths()
@@ -352,6 +389,66 @@ public class TrackerManager : MonoBehaviour
                     }
                     break;
             }
+        }
+
+        return missionsCompleted;
+    }
+
+    int checkBossesComplete()
+    {
+        int missionsCompleted = 0;
+
+        foreach (var boss in Bosses)
+        {
+            if (boss.BossComplete.enabled)
+            {
+                missionsCompleted++;
+            }
+        }
+
+        if (SonicAndDiablonPureDarkControl.BossComplete.enabled)
+        {
+            missionsCompleted++;
+        }
+
+        if (BlackDoomPureDarkControl.BossComplete.enabled)
+        {
+            missionsCompleted++;
+        }
+
+        if (SonicAndDiablonDarkControl.BossComplete.enabled)
+        {
+            missionsCompleted++;
+        }
+
+        if (EggDealerDarkControl.BossComplete.enabled)
+        {
+            missionsCompleted++;
+        }
+
+        if (EggDealerNormalDarkControl.BossComplete.enabled || EggDealerNormalHeroControl.BossComplete.enabled)
+        {
+            missionsCompleted++;
+        }
+
+        if (EggDealerHeroControl.BossComplete.enabled)
+        {
+            missionsCompleted++;
+        }
+
+        if (BlackDoomHeroControl.BossComplete.enabled)
+        {
+            missionsCompleted++;
+        }
+
+        if (SonicAndDiablonPureHeroControl.BossComplete.enabled)
+        {
+            missionsCompleted++;
+        }
+
+        if (BlackDoomPureHeroControl.BossComplete.enabled)
+        {
+            missionsCompleted++;
         }
 
         return missionsCompleted;
