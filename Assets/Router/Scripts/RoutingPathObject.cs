@@ -11,7 +11,7 @@ public class RoutingPathObject : MonoBehaviour
 
     public Button UpButton;
     public Button DownButton;
-    public Button VisualPickButton;
+    public Button ShowOnMapButton;
     public Button SettingsButton;
     public Button DeleteButton;
 

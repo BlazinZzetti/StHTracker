@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class PathViewerControl : MonoBehaviour 
 {
@@ -14,6 +15,7 @@ public class PathViewerControl : MonoBehaviour
 
     public InputField SearchTextField;
     public Button SearchButton;
+    public Button HidePathsButton;
 
     //Used to determine when the path control items are fully loaded.
     [HideInInspector]
@@ -25,6 +27,7 @@ public class PathViewerControl : MonoBehaviour
     void Start () 
 	{
         SearchButton.onClick.AddListener(onSearchButtonPressed);
+        HidePathsButton.onClick.AddListener(onHidePathsButtonPressed);
 
         numOfPaths = 0;
 
@@ -208,17 +211,21 @@ public class PathViewerControl : MonoBehaviour
 
             List<PathControlItem> pathsNotCompleted = Paths.Where(p => !p.CompletedToggle.isOn).ToList();
 
-            pathsNotCompleted[Random.Range(0, pathsNotCompleted.Count)].ShowToggle.isOn = true;
+            pathsNotCompleted[UnityEngine.Random.Range(0, pathsNotCompleted.Count)].ShowToggle.isOn = true;
         }
     }
 
     void onSearchButtonPressed()
     {
-        var searchText = SearchTextField.text;
+        searchAndShowPath(SearchTextField.text);
+    }
+
+    void searchAndShowPath(string searchText)
+    {
         int searchInt;
 
         if (int.TryParse(searchText, out searchInt))
-        {           
+        {
             if (searchInt >= 1 && searchInt <= 326)
             {
                 //Determine if Text is used for path number or code.
@@ -265,5 +272,18 @@ public class PathViewerControl : MonoBehaviour
             }
         }
         SearchTextField.text = "";
+    }
+
+    void onHidePathsButtonPressed()
+    {
+        foreach (var path in Paths)
+        {
+            path.ShowToggle.isOn = false;
+        }
+    }
+
+    internal void ShowPath(RoutingPathData pathData)
+    {
+        searchAndShowPath(pathData.ValidPathCode);
     }
 }

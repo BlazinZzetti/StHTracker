@@ -26,6 +26,8 @@ public class PathRoutingManager : MonoBehaviour
     public Text OutputText;
     private string unableToCompleteRoute = null;
 
+    public PathViewerControl PathControl;
+
     Dictionary<char, ProfileLevel.MissionType> MisionTypeLookup = new Dictionary<char, ProfileLevel.MissionType>
         {
             { 'D', ProfileLevel.MissionType.Dark },
@@ -548,6 +550,7 @@ public class PathRoutingManager : MonoBehaviour
         routingPath.DownButton.onClick.AddListener(() => OnRoutingPathDownButtonPressed(routingPath));
         routingPath.DeleteButton.onClick.AddListener(() => OnRoutingPathDeleteButtonPressed(routingPath));
         routingPath.SettingsButton.onClick.AddListener(() => ShowPathSettingsControlPanel(routingPath));
+        routingPath.ShowOnMapButton.onClick.AddListener(() => ShowOnMapButtonPressed(routingPath));
 
         routingPath.PathInputField.onEndEdit.AddListener(delegate { OnRoutingPathInputFieldEditEnd(routingPath); });
 
@@ -567,6 +570,7 @@ public class PathRoutingManager : MonoBehaviour
         routingPath.DownButton.onClick.AddListener(() => OnRoutingPathDownButtonPressed(routingPath));
         routingPath.DeleteButton.onClick.AddListener(() => OnRoutingPathDeleteButtonPressed(routingPath));
         routingPath.SettingsButton.onClick.AddListener(() => ShowPathSettingsControlPanel(routingPath));
+        routingPath.ShowOnMapButton.onClick.AddListener(() => ShowOnMapButtonPressed(routingPath));
 
         routingPath.PathInputField.onEndEdit.AddListener(delegate { OnRoutingPathInputFieldEditEnd(routingPath); });
 
@@ -1019,6 +1023,12 @@ public class PathRoutingManager : MonoBehaviour
         Destroy(rpo.gameObject);
         refreshInterface();
     }
+
+    private void ShowOnMapButtonPressed(RoutingPathObject rpo)
+    {
+        PathControl.ShowPath(rpo.PathData);
+        refreshInterface();
+    }    
 
     private void ShowPathSettingsControlPanel(RoutingPathObject routingPath)
     {
