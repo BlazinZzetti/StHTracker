@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
+using TMPro;
 
 public class CurrentPathTextControl : MonoBehaviour
 {
@@ -354,12 +355,12 @@ public class CurrentPathTextControl : MonoBehaviour
                 {
                     var pathNumber = path.Label.text.Split(new string[] { "Path #" } , StringSplitOptions.None)[1];
                     pathEnabled = true;
-                    GetComponent<Text>().text = "Running " + path.Label.text + " - " + PathNames[int.Parse(pathNumber)];
+                    GetComponent<TextMeshProUGUI>().text = "Running " + path.Label.text + " - " + PathNames[int.Parse(pathNumber)];
                 }
             }
             if (!pathEnabled)
             {
-                GetComponent<Text>().text = "";
+                GetComponent<TextMeshProUGUI>().text = "";
             }
         }	    
 	}

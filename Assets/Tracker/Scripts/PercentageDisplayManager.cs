@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PercentageDisplayManager : MonoBehaviour
 {
-    public Text ARankTrackerText;
-    public Text KeyTrackerText;
-    public Text WeaponsTrackerText;
-    public Text PathTrackerText;
-    public Text TotalTrackerText;
+    public TextMeshProUGUI ARankTrackerText;
+    public TextMeshProUGUI KeyTrackerText;
+    public TextMeshProUGUI WeaponsTrackerText;
+    public TextMeshProUGUI PathTrackerText;
+    public TextMeshProUGUI TotalTrackerText;
     public Text EstimatedTrackerText;
 
     public Toggle ARanksToggle;
