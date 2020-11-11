@@ -8,7 +8,7 @@ public class PathViewerControl : MonoBehaviour
 {
 	public ScrollRect ScrollView;
 
-	public List<PathControlItem> Paths = new List<PathControlItem> ();
+	public List<PathControlItem> Paths = new List<PathControlItem>();
 
     public List<Level> LevelPath = new List<Level>();
 
