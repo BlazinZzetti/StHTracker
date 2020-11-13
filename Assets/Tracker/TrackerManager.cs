@@ -135,38 +135,38 @@ public class TrackerManager : MonoBehaviour
 	void Update ()
     {
         //Path Options
-        if (Input.GetKeyUp(KeyCode.P))
-        {
-            togglePathMenu();
-        }
+        //if (Input.GetKeyUp(KeyCode.P))
+        //{
+        //    togglePathMenu();
+        //}
 
         //Set All Missions and Keys to Obtained
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            setObtainAllNonPathItems();
-        }
+        //if (Input.GetKeyDown(KeyCode.A))
+        //{
+        //    setObtainAllNonPathItems();
+        //}
 
         //Open Keys Menu
-        if (Input.GetKeyUp(KeyCode.K))
-        {
-            toggleKeyMenu();
-        }
+        //if (Input.GetKeyUp(KeyCode.K))
+        //{
+        //    toggleKeyMenu();
+        //}
 
-        if (Input.GetKeyUp(KeyCode.Z))
-        {
-            showRemainingMission();
-        }
+        //if (Input.GetKeyUp(KeyCode.Z))
+        //{
+        //    showRemainingMission();
+        //}
 
-        if (Input.GetKeyUp(KeyCode.X))
-        {
-            toggleRoutingView();
-        }
+        //if (Input.GetKeyUp(KeyCode.X))
+        //{
+        //    toggleRoutingView();
+        //}
 
         //Return to Main Menu
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            MenuCamera.enabled = !MenuCamera.enabled;
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    MenuCamera.enabled = !MenuCamera.enabled;
+        //}
 
         updateARanks();
 
