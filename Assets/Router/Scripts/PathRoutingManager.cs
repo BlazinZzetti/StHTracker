@@ -193,84 +193,74 @@ public class PathRoutingManager : MonoBehaviour
 
     private void initializeCutsceneData()
     {
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
-        CutsceneData.Add(new CutsceneData(10, 5));
+        CutsceneData.Add(new CutsceneData(67833, 15733));
+        CutsceneData.Add(new CutsceneData(48283, 8250));
+        CutsceneData.Add(new CutsceneData(35166, 3833));
+        CutsceneData.Add(new CutsceneData(66666, 8000));
+        CutsceneData.Add(new CutsceneData(43816, 5500));
+        CutsceneData.Add(new CutsceneData(27450, 0));
+        CutsceneData.Add(new CutsceneData(57333, 7266));
+        CutsceneData.Add(new CutsceneData(51600, 5183));
+        CutsceneData.Add(new CutsceneData(56600, 6750));
+        CutsceneData.Add(new CutsceneData(48583, 7350));
+        CutsceneData.Add(new CutsceneData(42316, 6150));
+        CutsceneData.Add(new CutsceneData(59450, 6516));
+        CutsceneData.Add(new CutsceneData(72683, 8416));
+        CutsceneData.Add(new CutsceneData(34400, 7983));
+        CutsceneData.Add(new CutsceneData(39433, 6533));
+        CutsceneData.Add(new CutsceneData(26866, 7616));
+        CutsceneData.Add(new CutsceneData(40033, 4583));
+        CutsceneData.Add(new CutsceneData(79050, 8616));
+        CutsceneData.Add(new CutsceneData(29066, 5833));
+        CutsceneData.Add(new CutsceneData(23116, 9500));
+        CutsceneData.Add(new CutsceneData(16433, 9166));
+        CutsceneData.Add(new CutsceneData(25666, 9316));
+        CutsceneData.Add(new CutsceneData(38233, 0));
+        CutsceneData.Add(new CutsceneData(130200, 6583));
+        CutsceneData.Add(new CutsceneData(47100, 5950));
+        CutsceneData.Add(new CutsceneData(63316, 0));
+        CutsceneData.Add(new CutsceneData(42333, 8100));
+        CutsceneData.Add(new CutsceneData(51850, 6433));
+        CutsceneData.Add(new CutsceneData(46283, 4966));
+        CutsceneData.Add(new CutsceneData(60700, 9766));
+        CutsceneData.Add(new CutsceneData(52050, 5866));
+        CutsceneData.Add(new CutsceneData(56950, 9533));
+        CutsceneData.Add(new CutsceneData(27966, 11516));
+        CutsceneData.Add(new CutsceneData(44666, 7416));
+        CutsceneData.Add(new CutsceneData(30983, 11500));
+        CutsceneData.Add(new CutsceneData(43333, 7166));
+        CutsceneData.Add(new CutsceneData(56450, 6266));
+        CutsceneData.Add(new CutsceneData(56283, 0));
+        CutsceneData.Add(new CutsceneData(85616, 10833));
+        CutsceneData.Add(new CutsceneData(43800, 6550));
+        CutsceneData.Add(new CutsceneData(51666, 10300));
+        CutsceneData.Add(new CutsceneData(52183, 9616));
+        CutsceneData.Add(new CutsceneData(42966, 13766));
+        CutsceneData.Add(new CutsceneData(48316, 6733));
+        CutsceneData.Add(new CutsceneData(53600, 6050));
+        CutsceneData.Add(new CutsceneData(63716, 6300));
+        CutsceneData.Add(new CutsceneData(64383, 0));
+        CutsceneData.Add(new CutsceneData(50000, 6633));
+        CutsceneData.Add(new CutsceneData(86233, 8350));
+        CutsceneData.Add(new CutsceneData(51650, 0));
+        CutsceneData.Add(new CutsceneData(10266, 5966));
+        CutsceneData.Add(new CutsceneData(35133, 5800));
+        CutsceneData.Add(new CutsceneData(49033, 5383));
+        CutsceneData.Add(new CutsceneData(49616, 0));
+        CutsceneData.Add(new CutsceneData(38133, 0));
+        CutsceneData.Add(new CutsceneData(51083, 0));
+        CutsceneData.Add(new CutsceneData(51883, 0));
+        CutsceneData.Add(new CutsceneData(64416, 0));
+        CutsceneData.Add(new CutsceneData(42750, 0));
+        CutsceneData.Add(new CutsceneData(62316, 0));
+        CutsceneData.Add(new CutsceneData(50400, 9166));
+        CutsceneData.Add(new CutsceneData(45200, 6000));
+        CutsceneData.Add(new CutsceneData(63866, 0));
+        CutsceneData.Add(new CutsceneData(42483, 5366));
+        CutsceneData.Add(new CutsceneData(58750, 0));
+        CutsceneData.Add(new CutsceneData(28016, 5600));
+        CutsceneData.Add(new CutsceneData(63200, 0));
+        CutsceneData.Add(new CutsceneData(50600, 0));
     }
 
     private void initializeRoutingLevels()
@@ -767,7 +757,7 @@ public class PathRoutingManager : MonoBehaviour
         unableToCompleteRoute = null;
         weaponStatus = new UnlockableWeapons();
 
-        if(NewGameToggle.isOn)
+        if(!NewGameToggle.isOn)
         {
             weaponStatus.GUNFortressDarkComplete();
             weaponStatus.GUNFortressHeroComplete();
@@ -783,7 +773,7 @@ public class PathRoutingManager : MonoBehaviour
 
         foreach (var cs in CutsceneData)
         {
-            cs.Skippable = NewGameToggle.isOn;
+            cs.Skippable = !NewGameToggle.isOn;
         }
 
         uint timeToComplete = 0;
