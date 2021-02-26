@@ -71497,6 +71497,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1765280660}
   - component: {fileID: 1765280661}
+  - component: {fileID: 1765280659}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -71504,6 +71505,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1765280659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765280658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afdd284a1ba26de4486684655a9993ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LayoutIndex: 0
+  TrackerCamera: {fileID: 563614123}
+  MenuCamera: {fileID: 289647547}
+  RoutingCamera: {fileID: 2132800145}
+  PathMenuCamera: {fileID: 1628054599}
+  KeysCamera: {fileID: 86867153}
+  MenuCanvas: {fileID: 206260409}
+  RoutingCanvas: {fileID: 1609177715}
+  PathMenuCanvas: {fileID: 1976940348}
+  KeysCanvas: {fileID: 121151420}
 --- !u!4 &1765280660
 Transform:
   m_ObjectHideFlags: 0
@@ -71532,9 +71555,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PercentageDisplayManager: {fileID: 824561238}
   PathControl: {fileID: 275914192}
-  PathControlMenu: {fileID: 1976940348}
-  MenuCamera: {fileID: 206260409}
-  RoutingPathsCanvas: {fileID: 1609177715}
+  LayoutManager: {fileID: 1765280659}
   storedFilePath: 
   WestopolisControl: {fileID: 286239725}
   DigitalCircuitControl: {fileID: 2084195550}

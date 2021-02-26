@@ -13,11 +13,8 @@ public class TrackerManager : MonoBehaviour
     public PercentageDisplayManager PercentageDisplayManager;
 
     public PathViewerControl PathControl;
-    public Canvas PathControlMenu;
 
-    public Canvas MenuCamera;
-
-    public Canvas RoutingPathsCanvas;
+    public LayoutManager LayoutManager;
 
     [HideInInspector]
     public string storedFilePath = string.Empty;
@@ -134,40 +131,48 @@ public class TrackerManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        //Path Options
-        //if (Input.GetKeyUp(KeyCode.P))
-        //{
-        //    togglePathMenu();
-        //}
+        if (Input.GetKeyUp(KeyCode.F12))
+        {
+            LayoutManager.SwitchLayout();
+        }
 
-        //Set All Missions and Keys to Obtained
-        //if (Input.GetKeyDown(KeyCode.A))
-        //{
-        //    setObtainAllNonPathItems();
-        //}
+        if (LayoutManager.LayoutIndex == 0)
+        {
+            //Path Options
+            if (Input.GetKeyUp(KeyCode.P))
+            {
+                togglePathMenu();
+            }
 
-        //Open Keys Menu
-        //if (Input.GetKeyUp(KeyCode.K))
-        //{
-        //    toggleKeyMenu();
-        //}
+            //Set All Missions and Keys to Obtained
+            //if (Input.GetKeyDown(KeyCode.A))
+            //{
+            //    setObtainAllNonPathItems();
+            //}
 
-        //if (Input.GetKeyUp(KeyCode.Z))
-        //{
-        //    showRemainingMission();
-        //}
+            //Open Keys Menu
+            if (Input.GetKeyUp(KeyCode.K))
+            {
+                toggleKeyMenu();
+            }
 
-        //if (Input.GetKeyUp(KeyCode.X))
-        //{
-        //    toggleRoutingView();
-        //}
+            if (Input.GetKeyUp(KeyCode.Z))
+            {
+                showRemainingMission();
+            }
 
-        //Return to Main Menu
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    MenuCamera.enabled = !MenuCamera.enabled;
-        //}
+            if (Input.GetKeyUp(KeyCode.X))
+            {
+                toggleRoutingView();
+            }
 
+            //Return to Main Menu
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                LayoutManager.MenuCamera.enabled = !LayoutManager.MenuCamera.enabled;
+                LayoutManager.MenuCanvas.enabled = !LayoutManager.MenuCanvas.enabled;
+            }
+        }
         updateARanks();
 
         updateKeys();
@@ -478,30 +483,35 @@ public class TrackerManager : MonoBehaviour
 
     void toggleKeyMenu()
     {
-        KeyEditMode = !KeyEditMode;
-        foreach (var level in ThreeMissionLevels)
-        {
-            level.KeyEditMode.SetActive(KeyEditMode);
-            level.SetPathActives(!KeyEditMode);
-        }
+        LayoutManager.KeysCamera.enabled = !LayoutManager.KeysCamera.enabled;
+        LayoutManager.KeysCanvas.enabled = !LayoutManager.KeysCanvas.enabled;
 
-        foreach (var level in TwoMissionLevels)
-        {
-            level.KeyEditMode.SetActive(KeyEditMode);
-            level.SetPathActives(!KeyEditMode);
-        }
+        //KeyEditMode = !KeyEditMode;
+        //foreach (var level in ThreeMissionLevels)
+        //{
+        //    level.KeyEditMode.SetActive(KeyEditMode);
+        //    level.SetPathActives(!KeyEditMode);
+        //}
 
-        TheLastWayControl.KeyEditMode.SetActive(KeyEditMode);
-        TheLastWayControl.SetPathActives(!KeyEditMode);
+        //foreach (var level in TwoMissionLevels)
+        //{
+        //    level.KeyEditMode.SetActive(KeyEditMode);
+        //    level.SetPathActives(!KeyEditMode);
+        //}
+
+        //TheLastWayControl.KeyEditMode.SetActive(KeyEditMode);
+        //TheLastWayControl.SetPathActives(!KeyEditMode);
     }
 
     void toggleRoutingView()
     {
-        RoutingPathsCanvas.enabled = !RoutingPathsCanvas.enabled;
+        LayoutManager.RoutingCamera.enabled = !LayoutManager.RoutingCamera.enabled;
+        LayoutManager.RoutingCanvas.enabled = !LayoutManager.RoutingCanvas.enabled;
     }
 
     void togglePathMenu()
     { 
-        PathControlMenu.enabled = !PathControlMenu.enabled;
+        LayoutManager.PathMenuCamera.enabled = !LayoutManager.PathMenuCamera.enabled;
+        LayoutManager.PathMenuCanvas.enabled = !LayoutManager.PathMenuCanvas.enabled;
     }
 }
